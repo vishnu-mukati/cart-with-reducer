@@ -17,7 +17,7 @@ const MainHeader = (props) => {
       <nav>
         <ul>
           <li>
-             &&<CartButton onClick = {toggleCartHandler}/>
+             <CartButton onClick = {toggleCartHandler}/>
           </li>
         </ul>
       </nav>

@@ -7,7 +7,7 @@ function App() {
    const isCartVisible = useSelector((state) => state.cartUI.isCartVisible);
   return (
     <Layout>
-      {isCartVisible&& <Cart />}
+      {isCartVisible && <Cart />}
       <Products />
     </Layout>
   );
