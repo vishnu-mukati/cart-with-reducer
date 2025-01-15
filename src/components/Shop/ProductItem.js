@@ -13,7 +13,7 @@ const ProductItem = (props) => {
   }
 console.log(id);
   return (
-    // <li key={id} className={classes.item} >
+    <li key={id} className={classes.item} >
       <Card>
         <header>
           <h3>{title}</h3>
@@ -24,7 +24,7 @@ console.log(id);
           <button onClick={addtoCartHandler}>Add to Cart</button>
         </div>
       </Card>
-    // </li>
+    </li>
   );
 };
 

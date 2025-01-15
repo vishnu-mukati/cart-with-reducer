@@ -39,7 +39,7 @@ const Products = (props) => {
       <ul>
         {productitems.map((item)=>{
           return (
-            <ProductItem title = {item.title} price = {item.price} description = {item.description} id = {item.id} />
+            <ProductItem key = {item.id} title = {item.title} price = {item.price} description = {item.description} id = {item.id} />
           )
         })}
          
