@@ -2,7 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const initialCartDataState = {
     ProductData: [],
-    totalamount: 0,
+    // totalamount: 0,
 }
 
 const ProductDataSlice = createSlice({
@@ -12,21 +12,18 @@ const ProductDataSlice = createSlice({
         addProductData(state, action) {
             const existingProductIndex = state.ProductData.findIndex(
                 (product) => {
-                    console.log("p",product);
-                    console.log( "payload",action.payload );
                     return product.id === action.payload.id
                 } 
             );
-            console.log(existingProductIndex);
             if (existingProductIndex >=0) {
-                console.log(existingProductIndex)
                 state.ProductData[existingProductIndex].quantity += 1;
-                state.totalamount += state.ProductData[existingProductIndex].price;
+                // state.totalamount += state.ProductData[existingProductIndex].price;
+                state.ProductData[existingProductIndex].totalamount += state.ProductData[existingProductIndex].price;
             } else {
-                console.log(action.payload);
-                state.ProductData.push({ ...action.payload, quantity: 1 });
-                state.totalamount += action.payload.price;
+                state.ProductData.push({ ...action.payload, quantity: 1,totalamount : action.payload.price });
+                // state.ProductData.totalamount += action.payload.price;
             }
+            state.totalamount = state.ProductData.reduce((sum, product) => sum + product.totalamount, 0);
         },
         increaseQuantity(state, action) {
             const product = state.ProductData.findIndex(
@@ -35,7 +32,7 @@ const ProductDataSlice = createSlice({
            console.log(product);
             if (product>=0) {
                 state.ProductData[product].quantity += 1;
-                state.totalamount += state.ProductData[product].price;
+                state.ProductData[product].totalamount += state.ProductData[product].price;
             }
         },
         decreaseQuantity(state, action) {
@@ -45,7 +42,7 @@ const ProductDataSlice = createSlice({
 
             if (product >= 0 ) {
                 state.ProductData[product].quantity -= 1;
-                state.totalamount -= state.ProductData[product].price;
+                state.ProductData[product].totalamount -= state.ProductData[product].price;
 
                 // Remove the product if quantity becomes 0
                 if (state.ProductData[product].quantity === 0) {
