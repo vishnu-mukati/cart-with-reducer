@@ -1,4 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { UIAction } from "./UISlice";
 
 const initialCartDataState = {
     ProductData: [],
@@ -12,22 +13,22 @@ const ProductDataSlice = createSlice({
         replaceCart(state, action) {
             console.log(action.payload);
             state.totalQuantity = action.payload.totalQuantity;
-            state.ProductData = action.payload.items;
-          },
+            state.ProductData = action.payload.ProductData;
+        },
 
         addProductData(state, action) {
             const newItem = action.payload;
-            const existingItem = state.ProductData.find((item)=>item.id ===newItem.id);
+            const existingItem = state.ProductData.find((item) => item.id === newItem.id);
             state.totalQuantity++;
-            if(!existingItem){
+            if (!existingItem) {
                 state.ProductData.push({
-                    id : newItem.id,
-                    price : newItem.price,
-                    quantity : 1,
-                    totalPrice : newItem.price,
-                    name : newItem.title,
+                    id: newItem.id,
+                    price: newItem.price,
+                    quantity: 1,
+                    totalPrice: newItem.price,
+                    name: newItem.title,
                 });
-            }else{
+            } else {
                 existingItem.quantity++;
                 existingItem.totalPrice = existingItem.totalPrice + newItem.price;
             }
@@ -38,11 +39,11 @@ const ProductDataSlice = createSlice({
             const existingItem = state.ProductData.find((item) => item.id === id);
             state.totalQuantity--;
             if (existingItem.quantity === 1) {
-              state.ProductData = state.ProductData.filter((item) => item.id !== id);
+                state.ProductData = state.ProductData.filter((item) => item.id !== id);
             } else {
-              existingItem.quantity--;
+                existingItem.quantity--;
             }
-          },
+        },
     }
 })
 
