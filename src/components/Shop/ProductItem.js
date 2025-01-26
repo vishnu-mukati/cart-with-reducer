@@ -3,15 +3,14 @@ import Card from '../UI/Card';
 import classes from './ProductItem.module.css';
 import { ProductDataAction } from '../../store/ProductDataSlice';
 
-const ProductItem = (props) => {
-  const { title, price, description ,id} = props;
+const ProductItem = ( { title, price, description ,id}) => {
+ 
   const dispatch = useDispatch();
   
   const addtoCartHandler = () =>{
     const productData = { title, price, description ,id};
      dispatch(ProductDataAction.addProductData(productData));
   }
-console.log(id);
   return (
     <li key={id} className={classes.item} >
       <Card>

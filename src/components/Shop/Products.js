@@ -30,9 +30,6 @@ const productitems = [
 
 const Products = (props) => {
 
-
-
-
   return (
     <section className={classes.products}>
       <h2>Buy your favorite products</h2>
@@ -42,8 +39,6 @@ const Products = (props) => {
             <ProductItem key = {item.id} title = {item.title} price = {item.price} description = {item.description} id = {item.id} />
           )
         })}
-         
-        
       </ul>
     </section>
   );

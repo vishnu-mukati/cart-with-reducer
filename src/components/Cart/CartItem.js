@@ -2,13 +2,26 @@ import { useDispatch, useSelector } from 'react-redux';
 import classes from './CartItem.module.css';
 import { ProductDataAction } from '../../store/ProductDataSlice';
 
-const CartItem = (props) => {
+const CartItem = () => {
   const ProductData = useSelector(state => state.data.ProductData);
-  console.log(ProductData);
-  // const quantity = useSelector(state => state.data.quantity);
-  const totalamount = useSelector(state => state.data.totalamount);
+
+
+ 
   const dispatch = useDispatch();
 
+  const removeItemHandler = (id) => {
+    dispatch(ProductDataAction.removeItemFromCart(id));
+  };
+
+  const addItemHandler = (id,title,price) => {
+    dispatch(
+      ProductDataAction.addProductData({
+        id,
+        title,
+        price,
+      })
+    );
+  };
  
   return (
 
@@ -18,7 +31,7 @@ const CartItem = (props) => {
           <header>
             <h3>{product.title}</h3>
             <div className={classes.price}>
-              ${(product.totalamount).toFixed(2)}{' '}
+              ${(product.totalPrice).toFixed(2)}{' '}
               <span className={classes.itemprice}>
                 (${product.price.toFixed(2)}/item)
               </span>
@@ -29,8 +42,8 @@ const CartItem = (props) => {
               x <span>{product.quantity}</span>
             </div>
             <div className={classes.actions}>
-              <button onClick={() => dispatch(ProductDataAction.decreaseQuantity(product.id))}>-</button>
-              <button onClick={() => dispatch(ProductDataAction.increaseQuantity(product.id))}>+</button>
+              <button onClick={()=>removeItemHandler(product.id)}>-</button>
+              <button onClick={()=>addItemHandler(product.id,product.title,product.price)}>+</button>
             </div>
           </div>
         </li>

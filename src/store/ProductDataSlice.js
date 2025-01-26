@@ -2,7 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const initialCartDataState = {
     ProductData: [],
-    // totalamount: 0,
+    totalQuantity: 0,
 }
 
 const ProductDataSlice = createSlice({
@@ -10,52 +10,37 @@ const ProductDataSlice = createSlice({
     initialState: initialCartDataState,
     reducers: {
         addProductData(state, action) {
-            const existingProductIndex = state.ProductData.findIndex(
-                (product) => {
-                    return product.id === action.payload.id
-                } 
-            );
-            if (existingProductIndex >=0) {
-                state.ProductData[existingProductIndex].quantity += 1;
-                // state.totalamount += state.ProductData[existingProductIndex].price;
-                state.ProductData[existingProductIndex].totalamount += state.ProductData[existingProductIndex].price;
+
+            const newItem = action.payload;
+            const existingItem = state.ProductData.find((item)=>item.id ===newItem.id);
+            state.totalQuantity++;
+            if(!existingItem){
+                state.ProductData.push({
+                    id : newItem.id,
+                    price : newItem.price,
+                    quantity : 1,
+                    totalPrice : newItem.price,
+                    name : newItem.title,
+                });
+            }else{
+                existingItem.quantity++;
+                existingItem.totalPrice = existingItem.totalPrice + newItem.price;
+            }
+        },
+
+        removeItemFromCart(state, action) {
+            const id = action.payload;
+            const existingItem = state.ProductData.find((item) => item.id === id);
+            state.totalQuantity--;
+            if (existingItem.quantity === 1) {
+              state.ProductData = state.ProductData.filter((item) => item.id !== id);
             } else {
-                state.ProductData.push({ ...action.payload, quantity: 1,totalamount : action.payload.price });
-                // state.ProductData.totalamount += action.payload.price;
+              existingItem.quantity--;
             }
-            state.totalamount = state.ProductData.reduce((sum, product) => sum + product.totalamount, 0);
-        },
-        increaseQuantity(state, action) {
-            const product = state.ProductData.findIndex(
-                (product) => product.id === action.payload
-            );
-           console.log(product);
-            if (product>=0) {
-                state.ProductData[product].quantity += 1;
-                state.ProductData[product].totalamount += state.ProductData[product].price;
-            }
-        },
-        decreaseQuantity(state, action) {
-            const product = state.ProductData.findIndex(
-                (product) => product.id === action.payload
-            );
-
-            if (product >= 0 ) {
-                state.ProductData[product].quantity -= 1;
-                state.ProductData[product].totalamount -= state.ProductData[product].price;
-
-                // Remove the product if quantity becomes 0
-                if (state.ProductData[product].quantity === 0) {
-                    state.ProductData = state.ProductData.filter(
-                        (item) => item.id !== state.ProductData[product].id
-                    );
-                }
-            }
-        },
+          },
     }
 })
 
-console.log(initialCartDataState);
 
 export const ProductDataAction = ProductDataSlice.actions;
 export default ProductDataSlice.reducer;

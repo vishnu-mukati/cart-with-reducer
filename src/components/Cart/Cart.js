@@ -3,9 +3,8 @@ import Card from '../UI/Card';
 import classes from './Cart.module.css';
 import CartItem from './CartItem';
 
-const Cart = (props) => {
+const Cart = () => {
   const productData = useSelector(state=>state.data.ProductData);
-  console.log(productData);
   return (
     <Card className={classes.cart}>
       <h2>Your Shopping Cart</h2>
