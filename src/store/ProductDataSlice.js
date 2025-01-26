@@ -9,8 +9,13 @@ const ProductDataSlice = createSlice({
     name: 'productdata',
     initialState: initialCartDataState,
     reducers: {
-        addProductData(state, action) {
+        replaceCart(state, action) {
+            console.log(action.payload);
+            state.totalQuantity = action.payload.totalQuantity;
+            state.ProductData = action.payload.items;
+          },
 
+        addProductData(state, action) {
             const newItem = action.payload;
             const existingItem = state.ProductData.find((item)=>item.id ===newItem.id);
             state.totalQuantity++;
