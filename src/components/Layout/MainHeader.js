@@ -1,8 +1,8 @@
 import CartButton from '../Cart/CartButton';
 import classes from './MainHeader.module.css';
-import {useDispatch, useSelector} from 'react-redux';
+import {useDispatch} from 'react-redux';
 import {UIAction} from '../../store/UISlice';
-const MainHeader = (props) => {
+const MainHeader = () => {
 
   const dispatch = useDispatch();
  
